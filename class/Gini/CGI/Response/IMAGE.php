@@ -1,5 +1,12 @@
 <?php
 
+/**
+* @file IMAGE.php
+* @brief Response Image
+* @author Hongjie Zhu
+* @version 0.1.0
+* @date 2014-10-21
+ */
 namespace Gini\CGI\Response;
 
     class IMAGE
