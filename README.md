@@ -50,6 +50,7 @@ gini imageserver app register
 ```yml
 ---
 root_dir: /tmp/images
+curl_proxy: proxy-url
 ...
 ```
 
