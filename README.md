@@ -40,6 +40,19 @@ server {
 ...
 ```
 
+## 注册app
+```shell
+gini imageserver app register
+```
+
+## 配置图片缓存目录`raw/config/app.yml`
+
+```yml
+---
+root_dir: /tmp/images
+...
+```
+
 ## app生成image url的方法
 
 ```PHP
