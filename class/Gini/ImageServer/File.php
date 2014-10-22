@@ -59,7 +59,7 @@ class File
         return false;
     }
 
-    public static function resize($from, $to, $width, $height)
+    public static function resize($from, $to, $width, $height=null)
     {
         $from = self::_get_real_path($from);
         $to = self::_get_real_path($to);

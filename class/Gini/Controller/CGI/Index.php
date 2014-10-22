@@ -30,7 +30,8 @@ class Index extends \Gini\Controller\CGI
         // hash@{w}*{h}.png
         // hash@2x.png
         // hash.png
-        $pattern = '/^([a-z0-9]+)(\@(?:(?:(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?))|(?:(\d+(?:\.\d+)?)x)))?(\.png|jpg|jpeg|gif|ico|swf)$/';
+        // 
+        $pattern = '/^([a-z0-9]+)(\@(?:(?:(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?))|(?:(\d+(?:\.\d+)?)x)|(\d+(?:\.\d+)?)))?(\.png|jpg|jpeg|gif|ico|swf)$/';
 
         $raw_file = md5(crypt($url, $client_secret));
 
@@ -38,8 +39,7 @@ class Index extends \Gini\Controller\CGI
 
         if ($raw_file!==$matches[1]) return;
 
-
-        $raw_file = $raw_file . $matches[6];
+        $raw_file = $raw_file . $matches[7];
         if (!\Gini\ImageServer\File::fetch($url, $raw_file)) return;
 
         $file = $req_file;
@@ -53,6 +53,12 @@ class Index extends \Gini\Controller\CGI
             // 2x
             else if ($matches[5]) {
                 if (!\Gini\ImageServer\File::scale($raw_file, $file, $matches[5])) {
+                    return;
+                }
+            }
+            // 2
+            else if ($matches[6]) {
+                if (!\Gini\ImageServer\File::resize($raw_file, $file, $matches[6])) {
                     return;
                 }
             }
