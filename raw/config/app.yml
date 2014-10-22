@@ -1,3 +1,4 @@
 ---
 root_dir: /tmp/images
+#curl_proxy: localhost
 ...

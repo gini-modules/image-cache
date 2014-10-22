@@ -46,6 +46,11 @@ class File
         $ch = curl_init();
         $handler = fopen($file, 'w');
         curl_setopt($ch, CURLOPT_URL, $url);
+        $proxy = \Gini\Config::get('app.curl_proxy');
+        if ($proxy) {
+            curl_setopt($ch, CURLOPT_PROXY, $proxy);
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+        }
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FILE, $handler);
