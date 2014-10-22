@@ -53,6 +53,11 @@ root_dir: /tmp/images
 ...
 ```
 
+## rpc远程调用
+
+* rpc->authorize($client_id, $client_secret);
+* rpc->delete(/\*REAL_URL\*/$url);
+
 ## app生成image url的方法
 
 ```PHP
