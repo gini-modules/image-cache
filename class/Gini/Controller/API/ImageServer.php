@@ -1,4 +1,11 @@
 <?php
+/**
+* @file ImageServer.php
+* @brief RPC
+* @author Hongjie Zhu
+* @version 0.1.0
+* @date 2014-10-21
+ */
 
 namespace Gini\Controller\API;
 

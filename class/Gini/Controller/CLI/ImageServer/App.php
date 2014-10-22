@@ -31,11 +31,14 @@ class App extends \Gini\Controller\CLI\CLITrait
 
         $file = APP_PATH . '/' . DATA_DIR . '/client/' . $data['client_id'] . '.yml';
 
+        if (file_exists($file)) {
+            return $this->showError('Client ID exists!');
+        }
+
         $yml = ['secret'=> $data['client_secret']];
         $bool = \yaml_emit_file($file, $yml);
         if ($bool===true) {
-            $this->show('Done!');
-            return;
+            return $this->show('Done!');
         }
         $this->showError('Fail!');
     }
