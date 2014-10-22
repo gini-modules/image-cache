@@ -51,5 +51,12 @@ $filename = md5(crypt($url, $secret));
 $eURL = urlencode($url);
 $eCID = urlencode($cid);
 
+// 原图
 $url = "http://image-server.gapper.com/{$filename}.png?url={$eURL}&client_id={$eCID}";
+// 指定宽高
+$url = "http://image-server.gapper.com/{$filename}@{$width}x{$height}.png?url={$eURL}&client_id={$eCID}";
+// 缩放倍数
+$url = "http://image-server.gapper.com/{$filename}@{$times}x.png?url={$eURL}&client_id={$eCID}";
+// 仅指定宽度，高度自适应
+$url = "http://image-server.gapper.com/{$filename}@{$width}.png?url={$eURL}&client_id={$eCID}";
 ```
