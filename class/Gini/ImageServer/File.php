@@ -59,12 +59,20 @@ class File
         return false;
     }
 
-    public static function resize($from, $to, $width, $height=null)
+    public static function resize($from, $to, $width=null, $height=null)
     {
+        if (!$width && !$height) return false;
         $from = self::_get_real_path($from);
         $to = self::_get_real_path($to);
         $image = Image::make($from);
-        $image->resize($width, $height);
+        if (!$width || !$height) {
+            $image->resize($width, $height, function($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+        else {
+            $image->resize($width, $height);
+        }
         if (!$image->save($to)) return false;
         return true;
     }
