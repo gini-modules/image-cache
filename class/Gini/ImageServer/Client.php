@@ -7,7 +7,7 @@
 * @date 2014-10-21
  */
 
-namespace Gini\ImageServer;
+namespace Gini\ImageCache;
 
 class Client
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gini\Controller\CLI\ImageServer;
+namespace Gini\Controller\CLI\ImageCache;
 
 class App extends \Gini\Controller\CLI\CLITrait
 {
@@ -44,7 +44,7 @@ class App extends \Gini\Controller\CLI\CLITrait
     }
 
     /**
-     * ImageServer app 帮助
+     * ImageCache app 帮助
      * @param $params
      * @return void
      */

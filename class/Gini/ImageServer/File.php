@@ -7,14 +7,14 @@
 * @date 2014-10-21
  */
 
-namespace Gini\ImageServer;
+namespace Gini\ImageCache;
 
 use \Intervention\Image\ImageManagerStatic as Image;
 
 class File
 {
 
-    private static function _get_real_path($file)
+    private static function _getRealPath($file)
     {
         $root = \Gini\Config::get('app.root_dir');
         $file = rtrim($root, '/') . '/' . $file;
@@ -23,7 +23,7 @@ class File
 
     public static function globDelete($file)
     {
-        $file = self::_get_real_path($file);
+        $file = self::_getRealPath($file);
         $pattern = $file . '*';
         foreach (glob($pattern) as $f) {
             \Gini\File::delete($f);
@@ -35,7 +35,7 @@ class File
     {
 
         $raw_file = $file;
-        $file = self::_get_real_path($file);
+        $file = self::_getRealPath($file);
 
         if (file_exists($file)) {
             if (!$delete_if_exists) {
@@ -67,8 +67,8 @@ class File
     public static function resize($from, $to, $width=null, $height=null)
     {
         if (!$width && !$height) return false;
-        $from = self::_get_real_path($from);
-        $to = self::_get_real_path($to);
+        $from = self::_getRealPath($from);
+        $to = self::_getRealPath($to);
         $image = Image::make($from);
         if (!$width || !$height) {
             $image->resize($width, $height, function($constraint) {
@@ -84,7 +84,7 @@ class File
 
     public static function scale($from, $to, $times)
     {
-        $file = self::_get_real_path($from);
+        $file = self::_getRealPath($from);
 
         $image = Image::make($file);
         $raw_width = $image->width();
@@ -96,7 +96,7 @@ class File
 
     public static function getContentType($file)
     {
-        $file = self::_get_real_path($file);
+        $file = self::_getRealPath($file);
 
         $finfo = finfo_open(FILEINFO_MIME);
         $info = finfo_file($finfo, $file);
@@ -107,7 +107,7 @@ class File
 
     public static function getContent($file)
     {
-        $file = self::_get_real_path($file);
+        $file = self::_getRealPath($file);
 
         $content = file_get_contents($file);
         return $content;

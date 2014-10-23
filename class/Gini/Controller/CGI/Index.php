@@ -14,8 +14,8 @@ class Index extends \Gini\Controller\CGI
 
     private function _show($file)
     {
-        $type = \Gini\ImageServer\File::getContentType($file);
-        $content = \Gini\ImageServer\File::getContent($file);
+        $type = \Gini\ImageCache\File::getContentType($file);
+        $content = \Gini\ImageCache\File::getContent($file);
         \Gini\IoC::construct('\Gini\CGI\Response\Image', $content, $type)->output();
     }
 
@@ -24,7 +24,7 @@ class Index extends \Gini\Controller\CGI
         if (!$req_file || !$url || !$client_id) return;
 
         // client_id和client_secret如何存储？
-        $client_secret = \Gini\ImageServer\Client::getSecret($client_id);
+        $client_secret = \Gini\ImageCache\Client::getSecret($client_id);
         if (!$client_secret) return;
 
         // hash@{w}*{h}.png
@@ -40,25 +40,25 @@ class Index extends \Gini\Controller\CGI
         if ($raw_file!==$matches[1]) return;
 
         $raw_file = $raw_file . $matches[7];
-        if (!\Gini\ImageServer\File::fetch($url, $raw_file)) return;
+        if (!\Gini\ImageCache\File::fetch($url, $raw_file)) return;
 
         $file = $req_file;
         if ($file!==$raw_file) {
             // 2x3
             if ($matches[3] && $matches[4]) {
-                if (!\Gini\ImageServer\File::resize($raw_file, $file, $matches[3], $matches[4])) {
+                if (!\Gini\ImageCache\File::resize($raw_file, $file, $matches[3], $matches[4])) {
                     return;
                 }
             }
             // 2x
             else if ($matches[5]) {
-                if (!\Gini\ImageServer\File::scale($raw_file, $file, $matches[5])) {
+                if (!\Gini\ImageCache\File::scale($raw_file, $file, $matches[5])) {
                     return;
                 }
             }
             // 2
             else if ($matches[6]) {
-                if (!\Gini\ImageServer\File::resize($raw_file, $file, $matches[6])) {
+                if (!\Gini\ImageCache\File::resize($raw_file, $file, $matches[6])) {
                     return;
                 }
             }

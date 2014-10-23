@@ -1,6 +1,6 @@
 <?php
 
-namespace Gini\ImageServer;
+namespace Gini\ImageCache;
 
 class RPC
 {
