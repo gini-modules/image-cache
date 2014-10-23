@@ -1,3 +1,11 @@
 ---
+id: e0933e2cbc44ce1bc3dec13e0c285722
 secret: d6bf74d82b7f1d60462cacd124a7b8c6
+sizes:
+- 2x
+- 3x
+- "100"
+paths:
+- a/b/c
+- c/d/e
 ...

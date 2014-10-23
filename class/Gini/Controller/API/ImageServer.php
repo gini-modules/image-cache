@@ -18,14 +18,14 @@ class ImageCache extends \Gini\Controller\API
         return \Gini\ImageCache\RPC::setCurrentClient($client_id)===true ? true : false;
     }
 
-    public function actionDelete($url)
+    public function actionDelete($url, $path=null)
     {
         $client_id = \Gini\ImageCache\RPC::getCurrentClient();
         if (!$client_id) return;
         $client_secret = \Gini\ImageCache\Client::getSecret($client_id);
         if (!$client_secret) return;
-        $filename = md5(crypt($url, $client_secret));
-        return \Gini\ImageCache\File::globDelete($filename);
+        $hash = \Gini\ImageCache\File::hash($url, $client_secret);
+        return \Gini\ImageCache\File::globDelete($hash, $path);
     }
 
 } // END class

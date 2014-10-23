@@ -19,9 +19,17 @@ class Client
 
     public static function getSecret($client_id)
     {
+        $config = self::getInfo($client_id);
+        if ($config && $config['secret']) {
+            return $config['secret'];
+        }
+    }
+
+    public static function getInfo($client_id)
+    {
         $file = APP_PATH . '/' . DATA_DIR . '/client/' . $client_id . '.yml';
         if (!file_exists($file)) return;
         $config = (array) \yaml_parse_file($file);
-        return $config['secret'];
+        return $config;
     }
 }

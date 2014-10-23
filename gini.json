@@ -1,6 +1,6 @@
 {
-    "id": "image-server",
-    "name": "Gini Image Server",
+    "id": "image-cache",
+    "name": "Gini Image Cache",
     "description": "图片服务",
     "version": "0.1.0",
     "dependencies": {

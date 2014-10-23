@@ -14,17 +14,31 @@ use \Intervention\Image\ImageManagerStatic as Image;
 class File
 {
 
-    private static function _getRealPath($file)
+    private static function _getRealPath($file, $ensure_dir=true)
     {
         $root = \Gini\Config::get('app.root_dir');
-        $file = rtrim($root, '/') . '/' . $file;
+        $file = rtrim($root, '/') . '/' . ltrim($file, '/');
+        if ($ensure_dir) {
+            $dir = dirname($file);
+            \Gini\File::ensureDir($dir);
+        }
         return $file;
     }
 
-    public static function globDelete($file)
+    public static function hash($url, $secret)
     {
-        $file = self::_getRealPath($file);
-        $pattern = $file . '*';
+        $hash = hash_hmac('md5', $url, $secret);
+        return $hash;
+    }
+
+    public static function globDelete($hash, $path=null)
+    {
+        $part = $hash;
+        if ($path) {
+            if (!preg_match('/^(?:[a-z0-9]+(?:\/)?)+$/', $path)) return;
+            $part = rtrim($path, '/') . '/' . $hash;
+        }
+        $pattern = self::_getRealPath($part, false) . '*';
         foreach (glob($pattern) as $f) {
             \Gini\File::delete($f);
         }
@@ -34,7 +48,6 @@ class File
     public static function fetch($url, $file, $delete_if_exists=false)
     {
 
-        $raw_file = $file;
         $file = self::_getRealPath($file);
 
         if (file_exists($file)) {

@@ -22,24 +22,38 @@ class App extends \Gini\Controller\CLI\CLITrait
             ]
         ]);
 
+        $data['sizes'] = [];
         while (true) {
             $sizes = $this->getData([
                 'sizes'=> [
                     'title'=> 'Accepted Sizes',
-                    'example'=> '[{$width}x{$height} | {$width}x | {$width}]'
+                    'example'=> '[{$width}x{$height} | {$width}x | {$width}] | <ENTER> to finish'
                 ]
             ]);
-            var_dump($sizes);die;
+            if (empty($sizes['sizes'])) break;
+            array_push($data['sizes'], $sizes['sizes']);
         }
 
-        if (empty($data['client_id'])) {
+        $data['paths'] = [];
+        while (true) {
+            $paths = $this->getData([
+                'paths'=> [
+                    'title'=> 'Accepted Relative Paths',
+                    'example'=> '<ENTER> to finish'
+                ]
+            ]);
+            if (empty($paths['paths'])) break;
+            array_push($data['paths'], $paths['paths']);
+        }
+
+        if (empty($data['id'])) {
             return $this->showError('Please input Client ID!');
         }
-        if (empty($data['client_secret'])) {
+        if (empty($data['secret'])) {
             return $this->showError('Please input Client Secret!');
         }
 
-        $file = APP_PATH . '/' . DATA_DIR . '/client/' . $data['client_id'] . '.yml';
+        $file = APP_PATH . '/' . DATA_DIR . '/client/' . $data['id'] . '.yml';
 
         if (file_exists($file)) {
             return $this->showError('Client ID exists!');
