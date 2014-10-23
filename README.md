@@ -1,4 +1,4 @@
-image-server
+image-cache
 ============
 
 ## Nginx的配置
@@ -7,7 +7,7 @@ image-server
 ...
 server {
     #listen      8827;
-    server_name image-server.docker.local;
+    server_name image-cache.docker.local;
 
     index index.php index.html index.htm;
 
@@ -19,7 +19,7 @@ server {
 
     location ~* \.php {
         # web folder
-        root /data/gini-modules/image-server/web;
+        root /data/gini-modules/image-cache/web;
 
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
@@ -42,7 +42,7 @@ server {
 
 ## 注册app
 ```shell
-gini imageserver app register
+gini image-cache app register
 ```
 
 ## 配置图片缓存目录`raw/config/app.yml`
@@ -71,11 +71,11 @@ $eURL = urlencode($url);
 $eCID = urlencode($cid);
 
 // 原图
-$url = "http://image-server.gapper.com/{$filename}.png?url={$eURL}&client_id={$eCID}";
+$url = "http://image-cache.gapper.com/{$filename}.png?url={$eURL}&client_id={$eCID}";
 // 指定宽高
-$url = "http://image-server.gapper.com/{$filename}@{$width}x{$height}.png?url={$eURL}&client_id={$eCID}";
+$url = "http://image-cache.gapper.com/{$filename}@{$width}x{$height}.png?url={$eURL}&client_id={$eCID}";
 // 缩放倍数
-$url = "http://image-server.gapper.com/{$filename}@{$times}x.png?url={$eURL}&client_id={$eCID}";
+$url = "http://image-cache.gapper.com/{$filename}@{$times}x.png?url={$eURL}&client_id={$eCID}";
 // 仅指定宽度，高度自适应
-$url = "http://image-server.gapper.com/{$filename}@{$width}.png?url={$eURL}&client_id={$eCID}";
+$url = "http://image-cache.gapper.com/{$filename}@{$width}.png?url={$eURL}&client_id={$eCID}";
 ```
