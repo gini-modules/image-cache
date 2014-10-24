@@ -61,21 +61,48 @@ curl_proxy: proxy-url
 
 ## app生成image url的方法
 
+* app.yml
+```app.yml
+image_cache:
+    server:
+        host: http://image-cache.gapper.in/
+        port: 8080
+    client_id: ***
+    client_secret: ***
+```
+
+* php code
+
 ```PHP
-$url = REAL_URL;
-$secret = CLIENT_SECRET;
-$cid = CLIENT_ID;
+# $size = 2x | 70x70 | 70 | null
+private function _makeCacheUrl($url, $size=null, $format='png')
+{
+    $config = (array)\Gini\Config::get('app.image_cache');
+    if (empty($config)) return $url;
 
-$filename = hash_hmac('md5', $url, $secret);
-$eURL = urlencode($url);
-$eCID = urlencode($cid);
+    $server = $config['server'];
+    if (empty($server)) return $url;
 
-// 原图
-$url = "http://image-cache.gapper.com/{$filename}.png?url={$eURL}&client_id={$eCID}";
-// 指定宽高
-$url = "http://image-cache.gapper.com/{$filename}@{$width}x{$height}.png?url={$eURL}&client_id={$eCID}";
-// 缩放倍数
-$url = "http://image-cache.gapper.com/{$filename}@{$times}x.png?url={$eURL}&client_id={$eCID}";
-// 仅指定宽度，高度自适应
-$url = "http://image-cache.gapper.com/{$filename}@{$width}.png?url={$eURL}&client_id={$eCID}";
+    $host = $server['host'];
+    $port = $server['port'];
+    $client_id = $config['client_id'];
+    $client_secret = $config['client_secret'];
+
+    if (!$host || !$client_id || !$client_secret) return $url;
+
+    $hash = hash_hmac('md5', $url, $client_secret);
+
+    $result = vsprintf('%s%s/%s%s%s.%s?url=%s&client_id=%s', [
+        rtrim($host, '/'),
+        $port ? ':' . $port : '',
+        $path ? rtrim($path, '/') . '/' : '',
+        $hash,
+        $size ? '@' . $size : '',
+        $format,
+        urlencode($url),
+        urlencode($client_id)
+    ]);
+
+    return $result;
+}
 ```
