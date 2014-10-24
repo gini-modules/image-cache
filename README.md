@@ -66,7 +66,7 @@ $url = REAL_URL;
 $secret = CLIENT_SECRET;
 $cid = CLIENT_ID;
 
-$filename = md5(crypt($url, $secret));
+$filename = hash_hmac('md5', $url, $secret);
 $eURL = urlencode($url);
 $eCID = urlencode($cid);
 
