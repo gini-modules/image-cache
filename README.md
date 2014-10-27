@@ -43,6 +43,7 @@ server {
 ## 注册app
 ```shell
 gini image-cache app register
+gini image-cache app edit
 ```
 
 ## 配置图片缓存目录`raw/config/app.yml`
