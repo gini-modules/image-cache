@@ -4,20 +4,39 @@ namespace Gini\Controller\CLI;
 
 abstract class CLITrait extends \Gini\Controller\CLI
 {
+    private function _getData($v)
+    {
+        $tmpTitle = $v['title'];
+        $tmpEG = $v['example'] ? " (e.g {$v['example']})" : '';
+        $tmpDefault = $v['default'] ? "\n\tdefault value is {$v['default']}\n" : '';
+        $tmpData = readline($tmpTitle . $tmpEG . $tmpDefault . ': ');
+        if (isset($v['default']) && !$tmpData) {
+            $tmpData = $v['default'];
+        }
+
+        if (isset($tmpData) && $tmpData!=='') {
+            return $tmpData;
+        }
+    }
+
     protected function getData($data)
     {
         $result = [];
         foreach ($data as $k => $v) {
-            $tmpTitle = $v['title'];
-            $tmpEG = $v['example'] ? " (e.g \e[31m{$v['example']}\e[0m)" : '';
-            $tmpDefault = $v['default'] ? " default value is \e[31m{$v['default']}\e[0m" : '';
-            $tmpData = readline($tmpTitle . $tmpEG . $tmpDefault . ': ');
-            if (isset($v['default']) && !$tmpData) {
-                $tmpData = $v['default'];
+            if (!!$v['isMulti']) {
+                $tmpResult = [];
+                while (true) {
+                    $tmpData = $this->_getData($v);
+                    if (empty($tmpData)) {
+                        break;
+                    }
+                    array_push($tmpResult, $tmpData);
+                }
             }
-            if (isset($tmpData) && $tmpData!=='') {
-                $result[$k] = $tmpData;
+            else {
+                $tmpResult = $this->_getData($v);
             }
+            if (!empty($tmpResult)) $result[$k] = $tmpResult;
         }
 
         return $result;
