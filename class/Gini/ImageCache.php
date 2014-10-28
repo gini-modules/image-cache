@@ -11,7 +11,7 @@ namespace Gini;
 
 class ImageCache
 {
-    public static function makeUrl($url, $size=null, $path=null, $format='png')
+    public static function makeURL($url, $size=null, $path=null, $format='png')
     {
         $config = (array)\Gini\Config::get('app.image_cache');
         if (empty($config)) return $url;
