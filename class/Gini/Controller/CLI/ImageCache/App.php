@@ -43,12 +43,14 @@ class App extends \Gini\Controller\CLI\CLITrait
             'sizes'=> [
                 'title'=> 'Accepted Sizes',
                 'example'=> '[{$width}x{$height} | {$width}x | {$width}] | <ENTER> to finish',
-                'isMulti'=> true
+                'isMulti'=> true,
+                'optional'=> true
             ],
             'paths'=> [
                 'title'=> 'Accepted Relative Paths',
                 'example'=> '<ENTER> to finish',
-                'isMulti'=> true
+                'isMulti'=> true,
+                'optional'=> true
             ]
         ]);
 
@@ -73,12 +75,14 @@ class App extends \Gini\Controller\CLI\CLITrait
             'sizes'=> [
                 'title'=> 'Accepted Sizes',
                 'example'=> '[{$width}x{$height} | {$width}x | {$width}] | <ENTER> to finish',
-                'isMulti'=> true
+                'isMulti'=> true,
+                'optional'=> true
             ],
             'paths'=> [
                 'title'=> 'Accepted Relative Paths',
                 'example'=> '<ENTER> to finish',
-                'isMulti'=> true
+                'isMulti'=> true,
+                'optional'=> true
             ]
         ]);
 

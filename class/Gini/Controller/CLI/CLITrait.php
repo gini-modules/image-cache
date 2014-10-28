@@ -17,6 +17,10 @@ abstract class CLITrait extends \Gini\Controller\CLI
         if (isset($tmpData) && $tmpData!=='') {
             return $tmpData;
         }
+
+        if (!$v['optional']) {
+            return $this->_getData($v);
+        }
     }
 
     protected function getData($data)
