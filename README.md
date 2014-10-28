@@ -65,9 +65,7 @@ curl_proxy: proxy-url
 * app.yml
 ```app.yml
 image_cache:
-    server:
-        host: http://image-cache.gapper.in/
-        port: 8080
+    server: http://image-cache.gapper.in/:8080
     client_id: ***
     client_secret: ***
 ```
@@ -76,31 +74,7 @@ image_cache:
 
 ```PHP
 # $size = 2x | 70x70 | 70 | null
-private function _makeCacheUrl($url, $size=null, $path=null, $format='png')
-{
-    $config = (array)\Gini\Config::get('app.image_cache');
-    if (empty($config)) return $url;
+public static function makeUrl($url, $size=null, $path=null, $format='png')
 
-    $server = $config['server'];
-    if (empty($server)) return $url;
-
-    $client_id = $config['client_id'];
-    $client_secret = $config['client_secret'];
-
-    if (!$client_id || !$client_secret) return $url;
-
-    $hash = hash_hmac('md5', $url, $client_secret);
-
-    $result = vsprintf('%s%s%s%s.%s?url=%s&client_id=%s', [
-        rtrim($server, '/') . '/',
-        $path ? rtrim($path, '/') . '/' : '',
-        $hash,
-        $size ? '@' . $size : '',
-        $format,
-        urlencode($url),
-        urlencode($client_id)
-    ]);
-
-    return $result;
-}
+\Gini\ImageCache::makeUrl(...);
 ```
