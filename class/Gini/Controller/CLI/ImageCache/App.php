@@ -54,8 +54,10 @@ class App extends \Gini\Controller\CLI\CLITrait
             ]
         ]);
 
-        $bool = \yaml_emit_file($file, array_merge($data, $newData));
+        $data = array_merge($data, $newData);
+        $bool = \yaml_emit_file($file, $data);
         if ($bool===true) {
+            $this->show(\yaml_emit($data));
             return $this->show('Done!');
         }
         $this->showError('Fail!');
@@ -66,11 +68,13 @@ class App extends \Gini\Controller\CLI\CLITrait
         $data = $this->getData([
             'id'=> [
                 'title'=> 'Client ID',
-                'example'=> 'e0933e2cbc44ce1bc3dec13e0c285722'
+                'example'=> 'e0933e2cbc44ce1bc3dec13e0c285722',
+                'default'=> md5(uniqid(true))
             ],
             'secret'=> [
                 'title'=> 'Client Secret',
-                'example'=> 'd6bf74d82b7f1d60462cacd124a7b8c6'
+                'example'=> 'd6bf74d82b7f1d60462cacd124a7b8c6',
+                'default'=> md5(uniqid(true))
             ],
             'sizes'=> [
                 'title'=> 'Accepted Sizes',
@@ -101,6 +105,7 @@ class App extends \Gini\Controller\CLI\CLITrait
 
         $bool = \yaml_emit_file($file, $data);
         if ($bool===true) {
+            $this->show(\yaml_emit($data));
             return $this->show('Done!');
         }
         $this->showError('Fail!');
