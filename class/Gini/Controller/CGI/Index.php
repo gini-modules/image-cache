@@ -75,7 +75,7 @@ class Index extends \Gini\Controller\CGI
         }
         // 2
         else if ($req_width) {
-            if (!\Gini\ImageCache\File::resize($raw_file, $req_file, $req_width)) {
+            if (!\Gini\ImageCache\File::resize($raw_file, $req_file, $req_width, $req_width)) {
                 return;
             }
         }
