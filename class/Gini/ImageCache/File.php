@@ -56,8 +56,10 @@ class File
             }
         }
 
+        $tmpFile = 'image-cache.' . time() . '.' . rand();
+
         $ch = curl_init();
-        $handler = fopen($file, 'w');
+        $handler = fopen($tmpFile, 'w');
         curl_setopt($ch, CURLOPT_URL, $url);
         $proxy = \Gini\Config::get('app.curl_proxy');
         if ($proxy) {
@@ -71,10 +73,15 @@ class File
         $hasError = curl_errno($ch);
         curl_close($ch);
         fclose($handler);
+
+        $result = false;
         if (!$hasError) {
-            return true;
+            \Gini\File::copy($tmpFile, $file);
+            $result = true;
         }
-        return false;
+        \Gini\File::delete($tmpFile);
+
+        return $result;
     }
 
     public static function resize($from, $to, $width=null, $height=null)
