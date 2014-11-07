@@ -1,4 +1,4 @@
 ---
-root_dir: /tmp/images
+root_dir: /data/images
 #curl_proxy: localhost
 ...

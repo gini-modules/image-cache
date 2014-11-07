@@ -73,14 +73,14 @@ class File
         curl_close($ch);
         fclose($handler);
 
-        $result = false;
         if (!$hasError) {
-            \Gini\File::copy($tmpFile, $file);
-            $result = true;
+            rename($tmpFile, $file);
+            return true;
         }
+
         \Gini\File::delete($tmpFile);
 
-        return $result;
+        return $false;
     }
 
     public static function resize($from, $to, $width=null, $height=null)
