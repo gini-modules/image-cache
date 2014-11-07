@@ -49,14 +49,13 @@ class File
     {
 
         $file = self::_getRealPath($file);
+        $tmpFile = self::_getRealPath('image-cache.' . time() . '.' . rand());
 
         if (file_exists($file)) {
             if (!$delete_if_exists) {
                 return true;
             }
         }
-
-        $tmpFile = '/tmp/image-cache.' . time() . '.' . rand();
 
         $ch = curl_init();
         $handler = fopen($tmpFile, 'w');
