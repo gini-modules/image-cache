@@ -56,7 +56,7 @@ class File
             }
         }
 
-        $tmpFile = 'image-cache.' . time() . '.' . rand();
+        $tmpFile = '/tmp/image-cache.' . time() . '.' . rand();
 
         $ch = curl_init();
         $handler = fopen($tmpFile, 'w');
