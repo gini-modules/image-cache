@@ -23,6 +23,9 @@ class Image
     public function output()
     {
         switch ($this->_type) {
+            case 'image/gif':
+                $type = 'image/gif';
+                break;
             case 'image/png':
             default:
                 $type = 'image/png';

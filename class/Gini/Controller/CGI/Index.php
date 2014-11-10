@@ -12,6 +12,30 @@ namespace Gini\Controller\CGI;
 class Index extends \Gini\Controller\CGI
 {
 
+    private function _showLoading()
+    {
+        $form = $this->form('get');
+
+        $file = APP_PATH . '/' . RAW_DIR . '/assets/img/loading.gif';
+        $type = 'image/gif';
+        $content = file_get_contents($file);
+
+        header("HTTP/1.1 404 Not Found");
+
+        header("Cache-Control: no-cache");
+
+        $re = (int) $form['_re'];
+        if ($re<2) {
+            $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+            $url = URL($url, [
+                '_re'=> ++$re
+            ]);
+            header("refresh:10; url={$url}"); 
+        }
+
+        \Gini\IoC::construct('\Gini\CGI\Response\Image', $content, $type)->output();
+    }
+
     private function _show($file)
     {
         $type = \Gini\ImageCache\File::getContentType($file);
@@ -98,7 +122,7 @@ class Index extends \Gini\Controller\CGI
 
         $file = $this->_getFile($path_info, $url, $client_id);
 
-        if (!$file) return $this->_show404();
+        if (!$file) return $this->_showLoading();
 
         $this->_show($file);
 
