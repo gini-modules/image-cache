@@ -24,15 +24,6 @@ class Index extends \Gini\Controller\CGI
 
         header("Cache-Control: no-cache");
 
-        $re = (int) $form['_re'];
-        if ($re<2) {
-            $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-            $url = URL($url, [
-                '_re'=> ++$re
-            ]);
-            header("refresh:10; url={$url}"); 
-        }
-
         \Gini\IoC::construct('\Gini\CGI\Response\Image', $content, $type)->output();
     }
 

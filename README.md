@@ -46,12 +46,18 @@ gini image-cache app register
 gini image-cache app edit
 ```
 
-## 配置图片缓存目录`raw/config/app.yml`
+## 配置图片缓存目录`raw/config/image-cache.yml`
 
 ```yml
 ---
-root_dir: /tmp/images
-curl_proxy: proxy-url
+cache_dir: /tmp/images
+curl: 
+    proxy: proxy_url
+    timeout: 5
+server_client:
+    server: http://127.0.0.1:80
+    client_id: CLIENTID
+    client_secret: CLIENTSECRET
 ...
 ```
 

@@ -16,7 +16,7 @@ class File
 
     private static function _getRealPath($file, $ensure_dir=true)
     {
-        $root = \Gini\Config::get('app.root_dir');
+        $root = \Gini\Config::get('image-cache.cache_dir');
         $file = rtrim($root, '/') . '/' . ltrim($file, '/');
         if ($ensure_dir) {
             $dir = dirname($file);
@@ -60,14 +60,16 @@ class File
         $ch = curl_init();
         $handler = fopen($tmpFile, 'w');
         curl_setopt($ch, CURLOPT_URL, $url);
-        $proxy = \Gini\Config::get('app.curl_proxy');
-        if ($proxy) {
-            curl_setopt($ch, CURLOPT_PROXY, $proxy);
+        $curl_config = (array)\Gini\Config::get('image-cache.curl');
+        if (isset($curl_config['proxy'])) {
+            curl_setopt($ch, CURLOPT_PROXY, $curl_config['proxy']);
             curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
         }
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FILE, $handler);
+        $timeout = isset($curl_config['timeout']) ? $curl_config['timeout'] : 5;
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         $content = curl_exec($ch);
         $hasError = curl_errno($ch);
         curl_close($ch);
