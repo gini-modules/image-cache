@@ -40,13 +40,13 @@ server {
 ...
 ```
 
-## 注册app
+## image-cache server 注册app
 ```shell
 gini image-cache app register
 gini image-cache app edit
 ```
 
-## 配置图片缓存目录`raw/config/image-cache.yml`
+## image-cache server 配置`raw/config/image-cache.yml`
 
 ```yml
 ---
@@ -54,12 +54,20 @@ cache_dir: /tmp/images
 curl: 
     proxy: proxy_url
     timeout: 5
-server_client:
+...
+```
+
+## image-cache client 配置`raw/config/app.yml`
+
+```yml
+---
+image_cache:
     server: http://127.0.0.1:80
     client_id: CLIENTID
     client_secret: CLIENTSECRET
 ...
 ```
+
 
 ## rpc远程调用
 
