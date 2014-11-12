@@ -45,6 +45,12 @@ class File
         return $pattern;
     }
 
+    public static function has($file)
+    {
+        $file = self::_getRealPath($file);
+        return file_exists($file);
+    }
+
     public static function fetch($url, $file, $delete_if_exists=false)
     {
 
@@ -69,6 +75,7 @@ class File
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FILE, $handler);
         $timeout = isset($curl_config['timeout']) ? $curl_config['timeout'] : 5;
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         $content = curl_exec($ch);
         $hasError = curl_errno($ch);

@@ -54,6 +54,8 @@ cache_dir: /tmp/images
 curl: 
     proxy: proxy_url
     timeout: 5
+aria2:
+    server: http://127.0.0.1:6800/jsonrpc
 ...
 ```
 

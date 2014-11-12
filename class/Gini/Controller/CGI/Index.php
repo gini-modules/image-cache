@@ -38,7 +38,6 @@ class Index extends \Gini\Controller\CGI
     {
         if (!$req_file || !$url || !$client_id) return;
 
-        // client_id和client_secret如何存储？
         $config = \Gini\ImageCache\Client::getInfo($client_id);
         if (!$config) return;
         $client_secret = $config['secret'];
@@ -70,7 +69,16 @@ class Index extends \Gini\Controller\CGI
         if ($hash!==$req_hash) return;
 
         $raw_file = $req_path . $req_hash . $req_ext;
-        if (!\Gini\ImageCache\File::fetch($url, $raw_file)) return;
+
+        if (!\Gini\ImageCache\File::has($raw_file)) {
+            // 使用aria2进行下载
+            // if (!\Gini\ImageCache\File::fetch($url, $raw_file)) return;
+            // return $raw_file;
+            $config = (array) \Gini\Config::get('image-cache.aria2');
+            $client = new \Aria2Client\Client($config['server'] ?: 'http://127.0.0.1:6800/jsonrpc');
+            $client->addURL($url, $raw_file);
+            return;
+        }
 
         if ($raw_file===$req_file) {
             return $raw_file;
