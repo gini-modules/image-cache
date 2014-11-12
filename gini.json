@@ -8,7 +8,8 @@
     },
     "composer": {
         "require": {
-            "intervention/image": "dev-master"
+            "intervention/image": "dev-master",
+            "pihizi/aria2-php-client": "dev-master"
         }
     }
 }
