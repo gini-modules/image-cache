@@ -53,7 +53,7 @@ gini image-cache app edit
 
 ```yml
 ---
-cache_dir: /tmp/images
+cache_dir: ${IMAGE_CACHE_ROOT_PATH}
 curl: 
     proxy: proxy_url
     timeout: 5
