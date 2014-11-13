@@ -11,9 +11,11 @@ server {
 
     index index.php index.html index.htm;
 
+    set $root /data/images;
+
     location / {
+        root $root;
         # images folder
-        root /tmp/images;
         try_files $uri /index.php$request_uri;
     }
 
@@ -30,6 +32,7 @@ server {
 
         include fastcgi_params;
 
+        fastcgi_param IMAGE_CACHE_ROOT_PATH $root;
         fastcgi_param GINI_MODULE_BASE_PATH /data/gini-modules;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PATH_INFO $fastcgi_path_info;
