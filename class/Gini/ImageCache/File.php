@@ -14,9 +14,15 @@ use \Intervention\Image\ImageManagerStatic as Image;
 class File
 {
 
-    private static function _getRealPath($file, $ensure_dir=true)
+    private static function _getRoot()
     {
         $root = \Gini\Config::get('image-cache.cache_dir');
+        return $root;
+    }
+
+    private static function _getRealPath($file, $ensure_dir=true)
+    {
+        $root = self::_getRoot();
         $file = rtrim($root, '/') . '/' . ltrim($file, '/');
         if ($ensure_dir) {
             $dir = dirname($file);
@@ -55,7 +61,7 @@ class File
     {
 
         $file = self::_getRealPath($file);
-        $tmpFile = self::_getRealPath('image-cache.' . time() . '.' . rand());
+        $tmpFile = tempnam(self::_getRoot(), 'image-cache.');
 
         if (file_exists($file)) {
             if (!$delete_if_exists) {
