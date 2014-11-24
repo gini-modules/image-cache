@@ -14,7 +14,7 @@ docker run --name pihizi-aria2 \
     -d pihizi/aria2
 ```
 
-* 名词结束
+* 名词解释
 
     /YOUR/ARIA2/CONFIG/DIR: aria2.conf 所属目录
 
