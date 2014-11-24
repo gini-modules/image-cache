@@ -88,7 +88,8 @@ server {
 
 ```yml
 ---
-cache_dir: ${IMAGE_CACHE_ROOT_PATH}
+#cache_dir: ${IMAGE_CACHE_ROOT_PATH}
+cache_dir: /data/images
 curl: 
     proxy: proxy_url
     timeout: 5
@@ -108,7 +109,7 @@ gini image-cache app edit
 
 ## image-cache client 
 
-    需要调用image-server服务的app，需要添加image-cache依赖，并配置响应的yml
+    需要调用image-server服务的app，需要添加image-cache依赖，并配置相应的yml
 
 * 配置`raw/config/app.yml`
 
