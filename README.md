@@ -35,7 +35,7 @@ rpc-listen-all=true
 # Enable JSON-RPC/XML-RPC server. Default: false
 enable-rpc=true
 
-on-download-complete=/etc/aria2/download-complete.sh
+on-download-complete=/etc/conf/aria2/download-complete.sh
 ```
 
 
