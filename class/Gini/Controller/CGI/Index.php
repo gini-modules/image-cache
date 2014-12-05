@@ -16,7 +16,7 @@ class Index extends \Gini\Controller\CGI
     {
         $form = $this->form('get');
 
-        $file = APP_PATH . '/' . RAW_DIR . '/assets/img/loading.gif';
+        $file = APP_PATH . '/web/assets/img/loading.gif';
         $type = 'image/gif';
         $content = file_get_contents($file);
 
