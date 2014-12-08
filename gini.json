@@ -2,7 +2,7 @@
     "id": "image-cache",
     "name": "Gini Image Cache",
     "description": "图片服务",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {
         "gini": ">=0.5.0"
     },
@@ -13,4 +13,3 @@
         }
     }
 }
-
