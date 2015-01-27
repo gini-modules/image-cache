@@ -2,8 +2,9 @@
 
 namespace Gini\Controller\CLI;
 
-abstract class CLITrait extends \Gini\Controller\CLI
+trait CLITrait
 {
+
     private function _getData($v)
     {
         $tmpTitle = $v['title'];

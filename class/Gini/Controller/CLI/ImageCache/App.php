@@ -2,8 +2,10 @@
 
 namespace Gini\Controller\CLI\ImageCache;
 
-class App extends \Gini\Controller\CLI\CLITrait
+class App extends \Gini\Controller\CLI
 {
+    use \Gini\Controller\CLI\CLITrait;
+
     public function __index($params)
     {
         $this->actionHelp($params);
@@ -27,7 +29,7 @@ class App extends \Gini\Controller\CLI\CLITrait
         }
 
         $data = \yaml_parse_file($file);
-        $this->show(vsprintf("Clint Secret: %s\nSizes: %s\nPaths: %s", [
+        $this->show(vsprintf("Client Secret: %s\nSizes: %s\nPaths: %s", [
             $data['secret'] ?: '-',
             $data['sizes'] ? "\n\t" . join("\n\t", $data['sizes']) : '-',
             $data['paths'] ? "\n\t" . join("\n\t", $data['paths']) : '-'
@@ -118,8 +120,8 @@ class App extends \Gini\Controller\CLI\CLITrait
      */
     public function actionHelp($params)
     {
-        echo "register app: gini imagecache app register\n";
-        echo "edit app: gini imagecache app edit\n";
+        echo "register app: gini image-cache app register\n";
+        echo "edit app: gini image-cache app edit\n";
     }
 
 }
