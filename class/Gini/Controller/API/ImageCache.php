@@ -18,6 +18,40 @@ class ImageCache extends \Gini\Controller\API
         return \Gini\ImageCache\RPC::setCurrentClient($client_id)===true ? true : false;
     }
 
+    public function actionHasSizes(array $sizes=[])
+    {
+        $client_id = \Gini\ImageCache\RPC::getCurrentClient();
+        if (!$client_id) return;
+        $file = APP_PATH . '/' . DATA_DIR . '/client/' . $client_id . '.yml';
+        if (!file_exists($file)) {
+            return false;
+        }
+        $data = \yaml_parse_file($file);
+        foreach ($sizes as $size) {
+            if (!in_array($size, (array)$data['sizes'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function actionHasPaths(array $paths=[])
+    {
+        $client_id = \Gini\ImageCache\RPC::getCurrentClient();
+        if (!$client_id) return;
+        $file = APP_PATH . '/' . DATA_DIR . '/client/' . $client_id . '.yml';
+        if (!file_exists($file)) {
+            return false;
+        }
+        $data = \yaml_parse_file($file);
+        foreach ($paths as $path) {
+            if (!in_array($path, (array)$data['paths'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function actionDelete($url, $path=null)
     {
         $client_id = \Gini\ImageCache\RPC::getCurrentClient();
