@@ -13,7 +13,7 @@ class ImageCache
 {
     public static function makeURL($url, $size=null, $path=null, $format='png')
     {
-        $config = (array)\Gini\Config::get('app.image_cache');
+        $config = (array)\Gini\Config::get('image-cache');
         if (empty($config)) return $url;
 
         $server = $config['server'];
