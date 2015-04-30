@@ -20,6 +20,9 @@ class ImageCache
                     return ['Please check your rpc config in image-cache.yml!'];
                 }
                 $sizes = $conf['sizes'];
+                if (empty($sizes)) {
+                    return ['Please check your rpc config in image-cache.yml!'];
+                }
                 if (is_array($sizes) && !$rpc->imagecache->hasSizes($sizes)) {
                     return ['image-cache: not all image sizes are registered!'];
                 }
