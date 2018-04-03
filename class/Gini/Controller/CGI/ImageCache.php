@@ -1,6 +1,6 @@
 <?php
 /**
-* @file Index.php
+* @file ImageCache.php
 * @brief 图片处理
 * @author Hongjie Zhu
 * @version 0.1.0
@@ -9,7 +9,7 @@
 
 namespace Gini\Controller\CGI;
 
-class Index extends \Gini\Controller\CGI
+class ImageCache extends \Gini\Controller\CGI
 {
 
     private function _showLoading()

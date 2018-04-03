@@ -36,4 +36,8 @@ class ImageCache
             }
         }
     }
+
+    public static function cgiRoute($router) {
+        $router->any('/', 'ImageCache@__index');
+    }
 }
