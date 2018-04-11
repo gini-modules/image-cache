@@ -37,7 +37,12 @@ class ImageCache
         }
     }
 
-    public static function cgiRoute($router) {
-        $router->any('/', 'ImageCache@__index');
+    // 如果image-cache作为独立服务对外提供服务, 需要再nginx服务器配置
+    // fastcgi_param IS_STAND_ALONE_IMAGE_CACHE_SERVER 1
+    public static function cgiRoute($router) 
+    {
+        if (!!@$_SERVER['IS_STAND_ALONE_IMAGE_CACHE_SERVER']) {
+            $router->any('/', 'ImageCache@__index');
+        }
     }
 }
