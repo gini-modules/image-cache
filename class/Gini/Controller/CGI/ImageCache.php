@@ -72,7 +72,7 @@ class ImageCache extends \Gini\Controller\CGI
 
         if (!\Gini\ImageCache\File::has($raw_file)) {
             // 使用aria2进行下载
-            // if (!\Gini\ImageCache\File::fetch($url, $raw_file)) return;
+            // if (!\Gini\ImageCache\File::fetch($url, $raw_file, true)) return;
             // return $raw_file;
             $config = (array) \Gini\Config::get('image-cache.aria2');
             $client = new \Aria2Client\Client($config['server'] ?: 'http://127.0.0.1:6800/jsonrpc');
