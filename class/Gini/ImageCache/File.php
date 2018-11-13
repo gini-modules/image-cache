@@ -54,13 +54,7 @@ class File
     public static function has($file)
     {
         $file = self::_getRealPath($file);
-        if (!file_exists($file)) return false;
-        $expire = (int) \Gini\Config::get('image-cache.file_expire');
-        if (!$expire) return true;
-        $now = time();
-        $mtime = filemtime($file);
-        if (($now - $mtime)>$expire) return false;
-        return true;
+        return file_exists($file);
     }
 
     public static function fetch($url, $file, $delete_if_exists=false)
@@ -73,7 +67,6 @@ class File
             if (!$delete_if_exists) {
                 return true;
             }
-            \Gini\File::delete($file);
         }
 
         $ch = curl_init();

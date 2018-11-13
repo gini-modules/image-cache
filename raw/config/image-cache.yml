@@ -1,8 +1,6 @@
 ---
 #cache_dir: /data/images
 cache_dir: ${IMAGE_CACHE_ROOT_PATH}
-# 单位为秒 默认不过期
-file_expire: ${IMAGE_CACHE_FILE_EXPIRE:='0'}
 curl:
     #proxy: proxy_url
     timeout: 5
