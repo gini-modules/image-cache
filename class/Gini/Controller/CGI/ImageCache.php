@@ -34,6 +34,43 @@ class ImageCache extends \Gini\Controller\CGI
         \Gini\IoC::construct('\Gini\CGI\Response\Image', $content, $type)->output();
     }
 
+    // Intervention 支持 GD 和 Imagick
+    // 目前我们是用GD
+    private static function _needGDCheck()
+    {
+        return true;
+    }
+
+    // https://stackoverflow.com/questions/45174672/imagecreatefrompng-and-imagecreatefromstring-causes-to-unrecoverable-fatal-err
+    // GD 库提供的方法有bug，需要用这种蹩脚的方式去处理，也是没有办法. 升级PHP版本的话，是个大成本的事情
+    private static function _isGDFile($file)
+    {
+        $root = \Gini\Config::get('image-cache.cache_dir');
+        $file = rtrim($root, '/') . '/' . ltrim($file, '/');
+        $mime = strtolower(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file));
+        switch ($mime) {
+        case 'image/png':
+        case 'image/x-png':
+            $method = 'imagecreatefrompng';
+            break;
+        case 'image/jpg':
+        case 'image/jpeg':
+        case 'image/pjpeg':
+            $method = 'imagecreatefromjpeg';
+            break;
+        case 'image/gif':
+            $method = 'imagecreatefromgif';
+            break;
+        default:
+            return false;
+        }
+        $output = `php -r "echo $method('$file');" 2>&1`;
+        if (empty($output)) {
+            return false;
+        }
+        return true;
+    }
+
     private function _getFile($req_file, $url, $client_id)
     {
         if (!$req_file || !$url || !$client_id) return;
@@ -82,6 +119,11 @@ class ImageCache extends \Gini\Controller\CGI
 
         if ($raw_file===$req_file) {
             return $raw_file;
+        }
+
+        if (self::_needGDCheck() && !self::_isGDFile($raw_file)) {
+            \Gini\ImageCache\File::globDelete($hash);
+            return;
         }
 
         // 2x3
